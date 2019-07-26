@@ -1,26 +1,43 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Discover from "./Discover.js";
+import MainDetails from "./MainDetails.js";
+import MainRegister from "./MainRegister.js";
+import Home from "./Home.js";
+
+
+class App extends React.Component{
+
+  constructor(){
+    super();
+    this.state={
+      detailId:0
+    }
+    this.details = this.details.bind(this);
+  }
+
+  details(detailsId){
+    this.setState({ detailId: detailsId }, function () {
+    });
+  }
+
+  render(){
+
+    return(
+      <Router>
+        <Switch>
+          <Route exact path="/home/:searchKey/:pageNum" component={Discover}  />
+          <Route exact path="/discover" component={Home} />
+          <Route exact path="/register" component={MainRegister} />
+          <Route exact path="/details/:id" component={MainDetails}/>
+          <Route exact path="/" component={Discover} />
+          <Route exact path="/:pageNum" component={Discover} />
+
+        </Switch>
+      </Router>
+    )
+  }
 }
 
-export default App;
+export default App
